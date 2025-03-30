@@ -13,7 +13,9 @@
 
  Date: 18/03/2025 13:58:52
 */
-
+/*create  database ruoYi_ai;
+*/
+use ruoYi_ai;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
