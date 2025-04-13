@@ -7,7 +7,7 @@ steps:
     image: maven:3.8.5-openjdk-17 # 定义创建容器的Docker镜像
     volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
       - name: maven-cache
-        path: /mnt/maven/.m2 # 将maven下载依赖的目录挂载出来，防止重复下载
+        path: /root/.m2 # 将maven下载依赖的目录挂载出来，防止重复下载
       - name: maven-build
         path: /mnt/app/build # 将应用打包好的Jar和执行脚本挂载出来
     commands: # 定义在Docker容器中执行的shell命令
