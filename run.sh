@@ -15,7 +15,7 @@ echo '----rm image----'
 # 打包编译docker镜像
 docker build -t ${group_name}/${app_name}:${app_version} .
 echo '----build image----'
-docker run -p 6039:6039 --name ${app_name} \
+docker run -p 6039:6039 -p 5005:5005 --name ${app_name} \
 -e TZ="Asia/Shanghai" \
 -v /etc/localtime:/etc/localtime \
 -d ${group_name}/${app_name}:${app_version}
