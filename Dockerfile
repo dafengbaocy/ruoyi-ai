@@ -32,7 +32,6 @@ ENTRYPOINT ["java", \
 #            "-Dskywalking.agent.service_name=ruoyi-server", \
 #            "-javaagent:/ruoyi/skywalking/agent/skywalking-agent.jar", \
             "-jar", \
-             "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005",\
              "app.jar"]
 
 
