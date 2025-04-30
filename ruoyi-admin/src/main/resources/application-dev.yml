@@ -61,9 +61,6 @@ spring.data:
     password: 19881212cy
     # 连接超时时间
     timeout: 10S
-    # 是否开启ssl
-    ssl: false
-
 redisson:
   # redis key前缀
   keyPrefix:
