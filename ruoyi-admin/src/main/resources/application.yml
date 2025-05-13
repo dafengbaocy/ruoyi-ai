@@ -49,8 +49,10 @@ server:
 # 日志配置
 logging:
   level:
-    org.ruoyi: @logging.level@
+    org.dromara: @logging.level@
     org.springframework: warn
+    org.mybatis.spring.mapper: error
+    org.apache.fury: warn
   config: classpath:logback-plus.xml
 
 # 用户配置
@@ -213,13 +215,18 @@ mybatis-encryptor:
   publicKey:
   privateKey:
 
-# Swagger配置
-swagger:
+springdoc:
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+  #  swagger-ui:
+  #    # 持久化认证数据
+  #    persistAuthorization: true
   info:
     # 标题
-    title: '标题：${ruoyi.name}多租户管理系统_接口文档'
+    title: '标题：RuoYi-Vue-Plus多租户管理系统_接口文档'
     # 描述
-    description: '描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...'
+    description: ' 用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...'
     # 版本
     version: '版本号: ${ruoyi.version}'
     # 作者信息
@@ -234,24 +241,10 @@ swagger:
         type: APIKEY
         in: HEADER
         name: ${sa-token.token-name}
-
-springdoc:
-  api-docs:
-    # 是否开启接口文档
-    enabled: true
-  swagger-ui:
-    # 持久化认证数据
-    persistAuthorization: true
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
-    - group: 1.演示模块
-      packages-to-scan: org.ruoyi.demo
-    - group: 2.通用模块
-      packages-to-scan: org.ruoyi.web
-    - group: 3.系统模块
+    - group: 1.系统模块
       packages-to-scan: org.ruoyi.system
-    - group: 4.代码生成模块
-      packages-to-scan: org.ruoyi.generator
 
 # 防止XSS攻击
 xss:
@@ -318,5 +311,20 @@ wechat:
         token:   ''
         aesKey: ''
 
-
+spring:
+  ai:
+    openai:
+      api-key: sk-xx
+      base-url: https://api.pandarobot.chat/
+    mcp:
+      client:
+        enabled: false
+        name: ruoyi-ai-mcp
+        sse:
+          connections:
+            server:
+              url: http://127.0.0.1:8081
+        stdio:
+          servers-configuration: classpath:mcp-server.json
+        request-timeout: 300s
 

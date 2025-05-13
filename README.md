@@ -34,6 +34,23 @@
     <a href="https://github.com/ageerle/ruoyi-ai/issues">提出新特性</a>
 </p>
 
+## 快速启动
+
+1. **克隆项目**
+   ```bash
+   git clone https://github.com/alanpeng/ruoyi-ai-docker-deploy
+   cd ruoyi-ai-docker-deploy
+   ```
+
+2. **启动全套应用**
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **访问应用界面**
+   - 用户界面：`http://your-server-ip:8081`
+   - 管理员界面：`http://your-server-ip:8082`
+
 ## 目录
 
 - [系统体验](#系统体验)
@@ -59,8 +76,7 @@
 ### 系统体验
 - 用户端：https://web.pandarobot.chat
 - 管理端：https://admin.pandarobot.chat
-  
-  用户名: admin 密码：admin123
+- 用户名: admin 密码：admin123
 
 ### 源码地址
 [1]github
@@ -69,13 +85,7 @@
 - 前端服务-小程序端: https://github.com/ageerle/ruoyi-uniapp
 - 后端服务：https://github.com/ageerle/ruoyi-ai
 
-[2]gitee
-- 前端服务-用户端: https://gitee.com/ageerle/ruoyi-web
-- 前端服务-管理端: https://gitee.com/ageerle/ruoyi-admin
-- 前端服务-小程序端: https://gitee.com/ageerle/ruoyi-uniapp
-- 后端服务：https://gitee.com/ageerle/ruoyi-ai
-
-[3]gitcode
+[2]gitcode
 - 前端服务-用户端：https://gitcode.com/ageerle/ruoyi-web
 - 前端服务-管理端:  https://gitcode.com/ageerle/ruoyi-admin
 - 前端服务-小程序端:  https://gitcode.com/ageerle/ruoyi-uniapp
@@ -83,20 +93,27 @@
 
 ### 配套文档
 - 配套文档: https://doc.pandarobot.chat
-  - 项目部署文档：https://doc.pandarobot.chat/guide/introduction/
+- 项目部署文档：https://doc.pandarobot.chat/guide/introduction/
 
-### 核心功能
-1. 全套开源系统：提供完整的前端应用、后台管理以及小程序应用，基于MIT协议，开箱即用。
-2. 本地RAG方案：集成Milvus/Weaviate向量库、本地向量化模型与Ollama，实现本地化RAG。
-3. 丰富插件功能：支持联网、SQL查询插件及Text2API插件，扩展系统能力与应用场景。
-4. 内置SSE、websocket等网络协议，支持对接多种大语言模型，同时还集成了MidJourney和DALLE AI绘画功能。
-5. 强大的多媒体功能：支持AI翻译、PPT制作、语音克隆和翻唱等。
-6. 扩展功能：支持将大模型接入个人或企业微信。
-7. 支付功能：支持易支付、微信支付等多种支付方式。
+### 核心功能与技术亮点
+#### 1. 全栈式开源系统
+- 全套开源系统：提供完整的前端应用、后台管理以及小程序应用，基于MIT协议，开箱即用。
+#### 2. 本地化 RAG 方案
+-  基于 **Langchain4j** 框架，支持 Milvus/Weaviate/Qdrant 向量库，结合 BGE-large-zh-v1.5 本地向量化模型 实现高效文档检索与知识库构建。
+-  支持 本地 LLM 接入，结合私有知识库实现安全可控的问答系统，避免依赖云端服务的隐私风险。
+#### 3. 多模态 AI 引擎与工具集成
+-  智能对话：支持 OpenAI GPT-4、Azure、ChatGLM 等主流模型，内置 SSE/WebSocket 协议实现低延迟交互，兼容 **扣子**、**DIFY** 等平台 API 调用。
+-  **Spring AI MCP** 支持：通过注解快速定义本地工具，支持调用 MCP 广场 的海量 MCP Server 服务，扩展模型能力边界。
+#### 4. 企业级扩展与商业化支持
+-  即时通讯集成：支持对接个人微信、企业微信及微信公众号，实现消息自动回复、用户管理与智能客服。
+-  支付系统：集成易支付、微信支付、Stripe 国际信用卡支付，满足商业化场景需求。
+#### 5. 多媒体处理与创新功能
+ -  AI 绘画：集成 DALL·E-3、MidJourney、Stable Diffusion，支持文生图、图生图及风格化创作，适用于营销素材生成与创意设计。
+ -  PPT 制作：根据文本输入自动生成结构化幻灯片，支持自定义模板(需要使用三方平台 如：文多多)。
 
 ### 项目演示
 
-#### mcp支持(需要切换dev分支 下周发布正式版)
+#### mcp支持
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
   <img src="image/mcp-01.png" alt="drawing" style="width: 600px; height: 300px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
   <img src="image/mcp-02.png" alt="drawing" style="width: 600px; height: 300px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
@@ -111,7 +128,6 @@
   <img src="image/04.png" alt="drawing" style="width: 600px; height: 300px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
   <img src="image/05.png" alt="drawing" style="width: 600px; height: 300px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 </div>
-
 
 #### 用户端
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
@@ -194,7 +210,6 @@
 ### 注意事项
 - vben模板
 
-
     Q：vben5 的模板默认是没有的吗？
   
     A：vben模板是收费的 请联系vben-vue-plus作者获取。
@@ -202,7 +217,6 @@
 ### 版本控制
 
 该项目使用Git进行版本管理。您可以在repository参看当前可用版本。
-
 
 
 ### 版权说明
@@ -215,9 +229,12 @@
 
 ###  开发计划
 
-- 流程编排
+| 主题 | 方向                                | 时间节点   | 
+| --- |-----------------------------------|--------| 
+| 前端简化版 | 与element-plus-x框架合作，推出基于该框架的前端简化版 | 2025.5 | 
+| agent2agent | Agent2Agent协议支持                   | 2025.6 | 
+| 流程编排 | 通过可视化界面和灵活的配置方式，快速构建AI应用          | 2025.7 | 
 
-通过流程编排功能，用户可以将不同的模型按照业务逻辑进行有序连接。这将解决单一模型能力不足的问题，充分发挥多个模型的协同作用，从而更好地满足企业的复杂业务需求。
 
 -  感谢
 
@@ -238,7 +255,7 @@
 
 #### 项目文档
 1. 项目文档基于vitepress构建
-2. 按照[如何参与开源项目](#如何参与开源项目)拉取 https://github.com/ageerle/ruoyi-doc
+2. 按照[如何参与开源项目](#如何参与开源项目)拉取https://github.com/ageerle/ruoyi-doc
 3. 安装依赖：npm install
 4. 启动项目：npm run docs:dev
 5. 主页路径：docs/guide/introduction/index.md
@@ -264,11 +281,15 @@
 [license-url]: https://github.com/ageerle/ruoyi-ai/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 
+## 🌿 第三方生态
+- [PPIO 派欧云：一键调用高性价比的开源模型 API 和 GPU 容器](https://ppinfra.com/user/register?invited_by=P8QTUY&utm_source=github_ruoyi-ai)
 
 ### 附：技术讨论群
 
-#### 全面开放，欢迎加入
+#### 进群学习
 🏠 wx：ruoyi-ai（加人备注：ruoyi-ai）
+
+ <img src="image/小助手wx.png" alt="drawing" style="width: 400px; height: 400px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 
 🏠 qq：1603234088 （加人备注：ruoyi-ai）
 
@@ -277,11 +298,4 @@
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
   <img src="image/QQ区-官方交流1群.png" alt="drawing" style="width: 400px; height: 400px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 </div>
-
-👏👏👏 ruoyi-ai官方交流4群（微信区）：
-<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-  <img src="image/WX区-官方交流4群.jpg" alt="drawing" style="width: 400px; height: 400px; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
-</div>
-
-
 

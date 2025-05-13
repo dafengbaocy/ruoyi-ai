@@ -10,7 +10,7 @@ import okhttp3.sse.EventSourceListener;
 import java.util.Objects;
 
 /**
- * 描述： sse
+ *   sse
  *
  * @author https:www.unfbx.com
  * 2023-02-28
@@ -28,7 +28,6 @@ public class ConsoleEventSourceListener extends EventSourceListener {
         log.info("OpenAI返回数据：{}", data);
         if ("[DONE]".equals(data)) {
             log.info("OpenAI返回数据结束了");
-            return;
         }
     }
 

@@ -8,7 +8,6 @@ import okhttp3.ResponseBody;
 import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import org.jetbrains.annotations.NotNull;
-import org.ruoyi.common.chat.constant.OpenAIConst;
 import org.ruoyi.common.chat.entity.chat.ChatCompletion;
 import org.ruoyi.common.chat.entity.chat.ChatCompletionResponse;
 import org.ruoyi.common.chat.entity.chat.FunctionCall;
@@ -20,7 +19,7 @@ import org.ruoyi.common.chat.openai.plugin.PluginParam;
 import java.util.Objects;
 
 /**
- * 描述： 插件开发返回信息收集sse监听器
+ *   插件开发返回信息收集sse监听器
  *
  * @author https:www.unfbx.com
  * 2023-08-18

@@ -1,7 +1,6 @@
 package org.ruoyi.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Lion Li
  */
 @SaIgnore
-@RequiredArgsConstructor
 @RestController
 public class IndexController {
 
@@ -20,7 +18,9 @@ public class IndexController {
      */
     @GetMapping("/")
     public String index() {
-        return "RuoYi-AI 启动成功";
+        return "RuoYi AI启动成功！";
     }
+
+
 
 }

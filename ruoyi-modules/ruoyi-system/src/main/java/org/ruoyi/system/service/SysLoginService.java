@@ -1,7 +1,6 @@
 package org.ruoyi.system.service;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -10,35 +9,31 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.ruoyi.common.core.constant.Constants;
 import org.ruoyi.common.core.constant.GlobalConstants;
 import org.ruoyi.common.core.constant.TenantConstants;
 import org.ruoyi.common.core.domain.dto.RoleDTO;
 import org.ruoyi.common.core.domain.model.LoginUser;
 import org.ruoyi.common.core.domain.model.VisitorLoginBody;
-import org.ruoyi.common.core.domain.model.VisitorLoginUser;
 import org.ruoyi.common.core.enums.*;
 import org.ruoyi.common.core.exception.user.CaptchaException;
 import org.ruoyi.common.core.exception.user.CaptchaExpireException;
 import org.ruoyi.common.core.exception.user.UserException;
-import org.ruoyi.common.core.service.ConfigService;
 import org.ruoyi.common.core.utils.*;
 import org.ruoyi.common.log.event.LogininforEvent;
 import org.ruoyi.common.redis.utils.RedisUtils;
 import org.ruoyi.common.satoken.utils.LoginHelper;
 import org.ruoyi.common.tenant.exception.TenantException;
 import org.ruoyi.common.tenant.helper.TenantHelper;
-import org.ruoyi.common.wechat.web.utils.UUIDShortUtil;
 import org.ruoyi.system.domain.SysUser;
-import org.ruoyi.system.domain.bo.SysUserBo;
-import org.ruoyi.system.domain.vo.LoginVo;
+
 import org.ruoyi.system.domain.vo.SysTenantVo;
 import org.ruoyi.system.domain.vo.SysUserVo;
 import org.ruoyi.system.mapper.SysUserMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxErrorException;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -58,19 +53,17 @@ import java.util.function.Supplier;
 public class SysLoginService {
 
     private final SysUserMapper userMapper;
+    private final WxMaService wxMaService;
     private final ISysPermissionService permissionService;
     private final ISysTenantService tenantService;
-    private final WxMaService wxMaService;
-    private final ISysUserService userService;
-    private final ConfigService configService;
+
     @Value("${user.password.maxRetryCount}")
     private Integer maxRetryCount;
-
     @Value("${user.password.lockTime}")
     private Integer lockTime;
 
     /**
-     * 获取微信
+     * 获取微信code
      * @param xcxCode 获取xcxCode
     */
     public String getOpenidFromCode(String xcxCode) {
@@ -138,9 +131,8 @@ public class SysLoginService {
         return StpUtil.getTokenValue();
     }
 
-
     /**
-     * 游客登录
+     * 微信小程序登录
      *
      * @param loginBody
      * @return String
@@ -164,58 +156,6 @@ public class SysLoginService {
             }
         }
     }
-
-    public LoginVo mpLogin(String openid) {
-        // 使用 openid 查询绑定用户 如未绑定用户 则根据业务自行处理 例如 创建默认用户
-        SysUserVo user = userService.selectUserByOpenId(openid);
-        VisitorLoginUser loginUser = new VisitorLoginUser();
-        if (ObjectUtil.isNull(user)) {
-            SysUserBo sysUser = new SysUserBo();
-            // 改为自增
-            String name = "用户" + UUIDShortUtil.generateShortUuid();
-            ;
-            // 设置默认用户名
-            sysUser.setUserName(name);
-            // 设置默认昵称
-            sysUser.setNickName(name);
-            // 设置默认密码
-            sysUser.setPassword(BCrypt.hashpw("123456"));
-            // 设置微信openId
-            sysUser.setOpenId(openid);
-            String configValue = configService.getConfigValue("mail", "amount");
-            // 设置默认余额
-            sysUser.setUserBalance(NumberUtils.toDouble(configValue, 1));
-            // 注册用户,设置默认租户为0
-            SysUser registerUser = userService.registerUser(sysUser, "0");
-
-            // 构建登录用户信息
-            loginUser.setTenantId("0");
-            loginUser.setUserId(registerUser.getUserId());
-            loginUser.setUsername(registerUser.getUserName());
-            loginUser.setUserType(UserType.APP_USER.getUserType());
-            loginUser.setOpenid(openid);
-            loginUser.setNickName(registerUser.getNickName());
-
-        } else {
-            // 此处可根据登录用户的数据不同 自行创建 loginUser
-            loginUser.setTenantId(user.getTenantId());
-            loginUser.setUserId(user.getUserId());
-            loginUser.setUsername(user.getUserName());
-            loginUser.setUserType(user.getUserType());
-            loginUser.setNickName(user.getNickName());
-            loginUser.setAvatar(user.getWxAvatar());
-            loginUser.setOpenid(openid);
-        }
-        // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
-        recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
-        LoginVo loginVo = new LoginVo();
-        // 生成令牌
-        loginVo.setToken(StpUtil.getTokenValue());
-        loginVo.setUserInfo(loginUser);
-        return loginVo;
-    }
-
 
     /**
      * 退出登录
